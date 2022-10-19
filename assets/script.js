@@ -3,11 +3,41 @@
 var currentDay = moment();
 $("#currentDay").text(currentDay.format("dddd, MMMM D, YYYY"));
 
-// function with another inside with a click event for the save button
-// then save that
+// When I click the save button, if something is typed in the description it needs to be placed into
+// local storage and assigned a key
+$(".saveBtn").on("click", function() {
+    var textValue = $(this).siblings(".description").val();
+    var divKey = $(this).parent().attr("id");
 
-// /second function to update the hours
+localStorage.setItem(divKey, textValue);
+})
 
-// setinterval to check to see if it's needed to change
+// on page load we need to find key and render value of key into appropriate text area
+$("#9 .description").val(localStorage.getItem("9"));
+$("#10 .description").val(localStorage.getItem("10"));
+$("#11 .description").val(localStorage.getItem("11"));
+$("#12 .description").val(localStorage.getItem("12"));
+$("#13 .description").val(localStorage.getItem("13"));
+$("#14 .description").val(localStorage.getItem("14"));
+$("#15 .description").val(localStorage.getItem("15"));
+$("#16 .description").val(localStorage.getItem("16"));
+$("#17 .description").val(localStorage.getItem("17"));
 
-// local storage
+var currentTime = moment().hours();
+
+// for each timeblock compare appropriate id number to the current time.
+$(".time-block").each(function() {
+    var divNumber = $(this).attr("id");
+    if (divNumber < currentTime){
+        $(this).addClass("past");
+    }
+
+    if (divNumber == currentTime){
+        $(this).addClass("present");
+    }
+
+    if (divNumber > currentTime){
+        $(this).addClass("future");
+    }
+
+})
